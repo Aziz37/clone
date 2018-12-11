@@ -42,6 +42,10 @@
                                 <label for="title">Title</label>
                                 <input type="text" class="form-control" name="title">
                             </div>
+                            <div class="form-group">
+                                <label for="objective">Objective</label>
+                                <input type="text" class="form-control" name="objective">
+                            </div>
                     </div>
                     <div class="modal-footer">
                             <button type="submit" class="btn btn-success">Create Board</button>

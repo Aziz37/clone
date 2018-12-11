@@ -32,6 +32,8 @@ class CardsController extends Controller
 
     	$card->save();
 
+        $card->admins()->attach($card->id);
+
     	return redirect()->back();
     }
 

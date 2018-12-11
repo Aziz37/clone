@@ -14,6 +14,10 @@ Route::prefix('admin')->group(function() {
 	Route::resource('/boards', Admin\BoardsController::class);
 	Route::resource('/lists', Admin\ListingsController::class);
 	Route::resource('/cards', Admin\CardsController::class);
+	Route::post('/cards/addAdmin', 'Admin\AdminCardsController@store');
+	Route::delete('/cards/addAdmin/{id}', 'Admin\AdminCardsController@delete');
+	Route::post('/cards/addUser', 'Admin\CardUsersController@store');
+	Route::delete('/cards/addUser/{id}', 'Admin\CardUsersController@delete');
 	Route::post('/files/upload', 'Admin\FilesController@store');
 	Route::get('/files/download/{id}', 'Admin\FilesController@show');
 	Route::delete('/files/{id}', 'Admin\FilesController@destroy');

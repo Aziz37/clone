@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Card;
 use App\File;
 use App\Board;
 use App\Comment;
@@ -45,5 +46,10 @@ class Admin extends Authenticatable
     public function files()
     {
         return $this->hasMany(File::class);
+    }
+
+    public function cards()
+    {
+        return $this->belongsToMany(Card::class);
     }
 }

@@ -3,6 +3,8 @@
 namespace App;
 
 use App\File;
+use App\User;
+use App\Admin;
 use App\Board;
 use App\Comment;
 use App\Listing;
@@ -10,6 +12,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Card extends Model
 {
+    public function admins()
+    {
+        return $this->belongsToMany(Admin::class);
+    }
+
     public function board()
     {
         return $this->belongsTo(Board::class);
@@ -28,6 +35,11 @@ class Card extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
     }
 
     public function date_format($date)

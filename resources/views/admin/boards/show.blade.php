@@ -36,7 +36,69 @@
             	<i class="fas fa-user-plus"></i> <a href="#">Invite</a>
             </h6>
         </div>
-
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="card">
+                        <h5 class="card-header">Objective</h5>
+                        <div class="card-body">
+                            <div class="card-text">{{$board->objective}}</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <h5 class="card-header">{{$board->title}} Due Date</h5>
+                        <div class="card-body">
+                            <div class="card-text">
+                                @if(isset($board->due_date) && isset($board->due_time))
+                                    <div id="dueDate">
+                                    {{$board->date_format($board->due_date)}} at {{$board->time_format($board->due_time)}}
+                                    <a href="#" id="noDate" style="float:right">
+                                        <i class="fas fa-pencil-alt"></i>
+                                    </a>
+                                </div>
+                                @else
+                                    <a href="#" id="noDate">No Dates set yet. Click to set date</a>
+                                @endif
+                                <div id="setDate" style="display:none">
+                                <form method="POST" action="/admin/boards/{{$board->id}}" >
+                                    @method('PATCH')
+                                    @csrf
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="date">Date</label>
+                                            <input type="date" id="datepicker_{{$board->id}}" class="form-control" name="date" value="{{$board->due_date}}"/>
+                                        </div>
+                                        <div class="col">
+                                            <label for="time">Time</label>
+                                            <div class="input-group clockpicker" data-placement="bottom" data-align="top" data-autoclose="true" >
+                                                <input type="text" name="time" class="form-control" value="{{$board->due_time}} ">
+                                                <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-time"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/><br/>
+                                    <input type="hidden" name="board_id" value="{{$board->id}}">
+                                    <button type="submit" class="btn btn-success" style="float:left">Change</button>
+                                </form>
+                                <form method="POST" action="/admin/boards/{{$board->id}}">
+                                    @method('PATCH')
+                                    @csrf
+                                    <input type="hidden" name="clear">
+                                    <input type="hidden" name="board_id" value="{{$board->id}}">
+                                    <button type="submit" class="btn btn-danger" style="float:right">Remove</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <br/>
         <section class="lists-container">
             @if(count($board->lists)>0)
                 @foreach($board->lists as $list)
@@ -90,8 +152,26 @@
                     </li>
                     <div class="card member-card" id="members_{{$card->id}}" style="display:none">
                         <div class="card-body">
-                            <p class="text-center">Members</p>
-                            <input type="text" class="form-control" placeholder="Search members">
+                            <div>
+                                <form method="POST" action="/admin/cards/addUser">
+                                    @csrf
+                                    <select class="js-example-basic-single" name="member" style="width:100%">
+                                        @foreach($users as $user)
+                                            <option value="{{$user->id}}">{{$user->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="hidden" value="{{$card->id}}" name="card_id">
+                                    <button type="submit" class="btn btn-success add-member">Add user</button>
+                                </form>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                @foreach($card->admins as $admin)
+                                    <li class="list-group-item">{{$admin->name}}</li>
+                                @endforeach
+                                @foreach($card->users as $user)
+                                    <li class="list-group-item">{{$user->name}}</li>
+                                @endforeach
+                            </ul>
                         </div>
                     </div>
                     <li>

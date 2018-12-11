@@ -23,4 +23,19 @@ class Board extends Model
     {
     	return $this->hasMany(Card::class);
     }
+
+    public function date_format($date)
+    {
+        $dbDate = date_create($date);
+        $formattedDate = date_format($dbDate, 'M j Y');
+
+        return $formattedDate;
+    }
+
+    public function time_format($time)
+    {
+        $formattedTime = date('g:i A', strtotime($time));
+
+        return $formattedTime;
+    }
 }
