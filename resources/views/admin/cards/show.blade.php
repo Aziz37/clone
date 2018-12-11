@@ -4,7 +4,7 @@
 	<!--main section-->
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <h5><a href="{{URL::previous()}}"><i class="fas fa-angle-left"></i> </a> <i class="fas fa-chalkboard"></i> {{$card->title}}<br/></h5><p> in list {{$card->list->name}}</p>
+            <h5><a href="/admin/boards/{{$card->board->id}}"><i class="fas fa-angle-left"></i> </a> <i class="fas fa-chalkboard"></i> {{$card->title}}<br/></h5><p> in list {{$card->list->name}}</p>
         </div>
         
         <div class="container">
@@ -142,11 +142,29 @@
                                     <i class="far fa-user"></i> <a class="showMembers" id="showMembers" data-form-id="{{$card->id}}" href="#">Members</a>
                                 </li>
                                 <div class="card member-card" id="members_{{$card->id}}" style="display:none">
-                                    <div class="card-body">
-                                        <p class="text-center">Members</p>
-                                        <input type="text" class="form-control">
-                                    </div>
-                                </div>
+                        <div class="card-body">
+                            <div>
+                                <form method="POST" action="/admin/cards/addUser">
+                                    @csrf
+                                    <select class="js-example-basic-single" name="member" style="width:100%">
+                                        @foreach($users as $user)
+                                            <option value="{{$user->id}}">{{$user->name}}</option>
+                                        @endforeach
+                                    </select>
+                                    <input type="hidden" value="{{$card->id}}" name="card_id">
+                                    <button type="submit" class="btn btn-success add-member">Add user</button>
+                                </form>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                @foreach($card->admins as $admin)
+                                    <li class="list-group-item">{{$admin->name}}</li>
+                                @endforeach
+                                @foreach($card->users as $user)
+                                    <li class="list-group-item">{{$user->name}}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
                                 <li>
                                     <i class="far fa-clock"></i> <a class="changeDate" id="changeDate" data-form-id="{{$card->id}}" href="#">Due Date</a>
                                 </li>

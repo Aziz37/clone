@@ -1,6 +1,37 @@
 @extends('layouts.admin.master')
 
 @section('content')
+    <div class="modal fade" id="inviteModal" tabindex="-1" role="dialog" aria-labelledby="inviteModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="inviteModalLabel">Invite Members to this board</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                   <form method="POST" action="/admin/boards/addUser">
+                        @csrf
+                        <select class="js-example-basic-single" name="member" style="width:100%">
+                            @foreach($users as $user)
+                                <option value="{{$user->id}}">{{$user->name}}</option>
+                            @endforeach
+                        </select>
+                        <input type="hidden" value="{{$board->id}}" name="board_id">
+                        <button type="submit" class="btn btn-primary add-member">Add members</button>
+                    </form>
+                </div>
+                <h6>Invited Members</h6>
+                <ul class="list-group list-group-flush">
+                    @foreach($board->users as $user)
+                        <li class="list-group-item">{{$user->name}}</li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <!--create list modal-->
     <div class="modal fade" id="createList" tabindex="-1" role="dialog" aria-labelledby="createListLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -30,11 +61,11 @@
         
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom board-title">
             <h5>
-            	<a href="/admin"><i class="fas fa-angle-left"></i> </a><i class="fas fa-columns"></i> {{ $board->title }} 
-            </h5> 
+            	<a href="/admin"><i class="fas fa-angle-left"></i> </a><i class="fas fa-columns"></i> {{ $board->title }}
+            </h5>
             <h6>
-            	<i class="fas fa-user-plus"></i> <a href="#">Invite</a>
-            </h6>
+                <i class="fas fa-user-plus"></i> <a href="#" data-toggle="modal" data-target="#inviteModal">Invite</a>
+            </h6> 
         </div>
         <div class="container">
             <div class="row">

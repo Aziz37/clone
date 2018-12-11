@@ -12,10 +12,10 @@ Route::prefix('admin')->group(function() {
 	Route::get('/', 'Admin\AdminController@index');
 
 	Route::resource('/boards', Admin\BoardsController::class);
+	Route::post('/boards/addUser', 'Admin\BoardUsersController@store');
+	Route::delete('/boards/addUser/{id}', 'Admin\BoardUsersController@delete');
 	Route::resource('/lists', Admin\ListingsController::class);
 	Route::resource('/cards', Admin\CardsController::class);
-	Route::post('/cards/addAdmin', 'Admin\AdminCardsController@store');
-	Route::delete('/cards/addAdmin/{id}', 'Admin\AdminCardsController@delete');
 	Route::post('/cards/addUser', 'Admin\CardUsersController@store');
 	Route::delete('/cards/addUser/{id}', 'Admin\CardUsersController@delete');
 	Route::post('/files/upload', 'Admin\FilesController@store');
@@ -29,4 +29,13 @@ Route::prefix('admin')->group(function() {
 	Route::get('/logout', 'Auth\AdminLoginController@logout');
 });
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::prefix('users')->group(function() {
+	Route::get('/home', 'User\HomeController@index');
+
+	Route::resource('/boards', User\BoardsController::class);
+
+	Route::get('/profile/{id}/edit', 'User\HomeController@edit');
+	Route::patch('/profile/{id}', 'User\HomeController@update');
+	
+	Route::get('/logout', 'Auth\LoginController@userLogout');
+});

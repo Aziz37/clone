@@ -4,6 +4,7 @@ namespace App;
 
 use App\Card;
 use App\File;
+use App\Board;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -38,5 +39,10 @@ class User extends Authenticatable
     public function cards()
     {
         return $this->belongsToMany(Card::class);
+    }
+
+    public function boards()
+    {
+        return $this->belongsToMany(Board::class);
     }
 }

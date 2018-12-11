@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Card;
+use App\User;
 use App\Listing;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,8 +41,9 @@ class CardsController extends Controller
     public function show($id)
     {
         $card = Card::findOrFail($id);
+        $users = User::all();
         
-        return view('admin.cards.show', compact('card'));
+        return view('admin.cards.show', compact('card', 'users'));
     }
 
     public function update($id, Request $request)

@@ -9,7 +9,7 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="/admin"><i class="fas fa-columns"></i> Boards <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="/users/home"><i class="fas fa-columns"></i> Boards <span class="sr-only">(current)</span></a>
                 </li>
             </ul>
             <form class="form-inline mt-2 mt-md-0">
@@ -18,3 +18,10 @@
         </div>
     </nav>
     <!--end navbar-->
+    <div class="panel-header panel-header-sm d-flex justify-content-center">
+        @if ($flash = session('message'))
+            <div id="alert" class="alert alert-info fade show" role="alert">
+                <strong>{{ $flash }}</strong>
+            </div>
+        @endif
+    </div>
