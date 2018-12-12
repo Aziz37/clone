@@ -274,7 +274,7 @@
                                 </li>
                             @endforeach
                         </ul>
-                        <a href="#" class="add-card-btn btn showForm" id="showForm_{{$list->id}}" data-form-id="{{$list->id}}"><i class="fas fa-plus"></i> Add a card</a>
+                        <a href="#" class="add-card-btn btn showForm user-end" id="showForm_{{$list->id}}" data-form-id="{{$list->id}}"><i class="fas fa-plus"></i> Add a card</a>
                         <div id="{{$list->id}}" style="display:none">
                             <form method="POST" action="/admin/cards" style="margin:5px">
                                 @csrf

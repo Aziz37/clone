@@ -33,6 +33,7 @@ Route::prefix('users')->group(function() {
 	Route::get('/home', 'User\HomeController@index');
 
 	Route::resource('/boards', User\BoardsController::class);
+	Route::resource('/cards', User\CardsController::class);
 
 	Route::get('/profile/{id}/edit', 'User\HomeController@edit');
 	Route::patch('/profile/{id}', 'User\HomeController@update');

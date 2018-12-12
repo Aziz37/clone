@@ -293,3 +293,10 @@ body {
   margin-top: 5px;
   line-height: 0.5;
 }
+
+.progress {
+  width:120px;
+  height:20px;
+  margin-right:10px;
+  float:left;
+}

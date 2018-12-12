@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
-use App\Card;
 use App\User;
-use App\Admin;
-use App\Listing;
+use App\Card;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
@@ -14,7 +12,7 @@ class CardsController extends Controller
 {
     public function __construct()
     {
-    	$this->middleware('auth:admin');
+    	$this->middleware('auth');
     }
 
     public function store(Request $request)
@@ -28,25 +26,17 @@ class CardsController extends Controller
 
     	$card = new Card;
 
-        $card->admin_id = Auth::user()->id;
+    	$card->user_id = Auth::user()->id;
         $card->board_id = $boardId;
         $card->listing_id = $listId;
     	$card->title = $request->input('title');
 
     	$card->save();
 
-        $admin = Admin::findOrFail(Auth::user()->id);
-        $admin->cards()->attach($card->id);
+        $user = User::findOrFail(Auth::user()->id);
+        $user->cards()->attach($card->id);
 
     	return redirect()->back();
-    }
-
-    public function show($id)
-    {
-        $card = Card::findOrFail($id);
-        $users = User::all();
-        
-        return view('admin.cards.show', compact('card', 'users'));
     }
 
     public function update($id, Request $request)
@@ -87,15 +77,5 @@ class CardsController extends Controller
         ]);
 
         return redirect()->back();
-    }
-
-    public function destroy($id)
-    {
-        $card = Card::findOrFail($id);
-        $boardId = $card->board_id;
-
-        $card->delete();
-
-        return redirect()->action('Admin\BoardsController@show', compact('boardId'));
     }
 }

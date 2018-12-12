@@ -10,6 +10,16 @@
 
 <script>
 	$(function() {
+		$('.user-end').click(function() {
+			var formId = $(this).data('form-id');
+			$('#'+formId).toggle();
+			$('#showForm_'+formId).toggle();
+		});
+	});
+</script>
+
+<script>
+	$(function() {
 		$('.closeForm').click(function() {
 			var formId = $(this).data('form-id');
 			$('#'+formId).toggle();
