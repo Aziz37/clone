@@ -61,11 +61,18 @@
         
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom board-title">
             <h5>
-            	<a href="/admin"><i class="fas fa-angle-left"></i> </a><i class="fas fa-columns"></i> {{ $board->title }}
-            </h5>
-            <h6>
-                <i class="fas fa-user-plus"></i> <a href="#" data-toggle="modal" data-target="#inviteModal">Invite</a>
-            </h6> 
+                <a href="/admin"><i class="fas fa-angle-left"></i> </a><i class="fas fa-columns"></i> {{ $board->title }}  |
+                <span class="h6"><i class="fas fa-user-plus"></i> <a href="#" data-toggle="modal" data-target="#inviteModal">Invite</a></span>
+            </h5> 
+            <h6>   
+                Project Progress: {{$percentage}}%
+                 <div class="progress" style="width:600px">
+                    <div class="progress-bar bg-success" style="width:{{$percentage}}%">
+                    </div>
+                </div>
+            </h6>
+
+            
         </div>
         <div class="container">
             <div class="row">
@@ -146,7 +153,7 @@
                         </h3>
                         <ul class="list-items">
                             @foreach($list->cards as $card)
-                                <li><a href="/admin/cards/{{$card->id}}">
+                                <li class="{{$card->color}}"><a href="/admin/cards/{{$card->id}}">
                                     {{$card->title}}
                                     <a href="#" class="options" data-toggle="modal" data-target="#options_{{$card->id}}"> 
                                         <i class="fas fa-pencil-alt"></i>
@@ -171,13 +178,76 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="optionsLabel">{{$card->title}}</h5>
+                <h6 class="modal-title" id="optionsLabel">{{$card->title}}</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <ul>
+                    <li>
+                        <i class="fas fa-palette"></i> <a class="setColor" id="setColor" data-form-id="{{$card->id}}" href="#">Set Color</a>
+                    </li>
+                    <div class="card member-card" id="colors_{{$card->id}}" style="display:none">
+                        <div class="card-body">
+                            <div class="row text-center">
+                                <a href="javascript:{}" onclick="event.preventDefault(); document.getElementById('red_{{$card->id}}').submit();">
+                                    <span class="border colors red"></span>
+                                </a>
+                                <form method="POST" action="/admin/cards/{{$card->id}}" id="red_{{$card->id}}" style="display:none">
+                                    @method('PATCH')
+                                    @csrf
+                                    <input type="hidden" name="card_id" value="{{$card->id}}">
+                                    <input type="hidden" name="color" value="red">
+                                </form>
+                                <a href="javascript:{}" onclick="event.preventDefault(); document.getElementById('purple_{{$card->id}}').submit();">
+                                    <span class="border colors purple"></span>
+                                </a>
+                                <form method="POST" action="/admin/cards/{{$card->id}}" id="purple_{{$card->id}}" style="display:none">
+                                    @method('PATCH')
+                                    @csrf
+                                    <input type="hidden" name="card_id" value="{{$card->id}}">
+                                    <input type="hidden" name="color" value="purple">
+                                </form>
+                                <a href="javascript:{}" onclick="event.preventDefault(); document.getElementById('blue_{{$card->id}}').submit();">
+                                    <span class="border colors blue"></span>
+                                </a>
+                                <form method="POST" action="/admin/cards/{{$card->id}}" id="blue_{{$card->id}}" style="display:none">
+                                    @method('PATCH')
+                                    @csrf
+                                    <input type="hidden" name="card_id" value="{{$card->id}}">
+                                    <input type="hidden" name="color" value="blue">
+                                </form>
+                                <a href="javascript:{}" onclick="event.preventDefault(); document.getElementById('orange_{{$card->id}}').submit();">
+                                    <span class="border colors orange"></span>
+                                </a>
+                                <form method="POST" action="/admin/cards/{{$card->id}}" id="orange_{{$card->id}}" style="display:none">
+                                    @method('PATCH')
+                                    @csrf
+                                    <input type="hidden" name="card_id" value="{{$card->id}}">
+                                    <input type="hidden" name="color" value="orange">
+                                </form>
+                                <a href="javascript:{}" onclick="event.preventDefault(); document.getElementById('yellow_{{$card->id}}').submit();">
+                                    <span class="border colors yellow"></span>
+                                </a>
+                                <form method="POST" action="/admin/cards/{{$card->id}}" id="yellow_{{$card->id}}" style="display:none">
+                                    @method('PATCH')
+                                    @csrf
+                                    <input type="hidden" name="card_id" value="{{$card->id}}">
+                                    <input type="hidden" name="color" value="yellow">
+                                </form>
+                                <a href="javascript:{}" onclick="event.preventDefault(); document.getElementById('white_{{$card->id}}').submit();">
+                                    <span class="border colors white"></span>
+                                </a>
+                                <form method="POST" action="/admin/cards/{{$card->id}}" id="white_{{$card->id}}" style="display:none">
+                                    @method('PATCH')
+                                    @csrf
+                                    <input type="hidden" name="card_id" value="{{$card->id}}">
+                                    <input type="hidden" name="color" value="white">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     <li>
                         <i class="far fa-user"></i> <a class="showMembers" id="showMembers" data-form-id="{{$card->id}}" href="#">Change members</a>
                     </li>

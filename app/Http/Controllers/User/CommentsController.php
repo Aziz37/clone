@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
 use App\Comment;
 use Illuminate\Http\Request;
@@ -9,10 +9,10 @@ use App\Http\Controllers\Controller;
 
 class CommentsController extends Controller
 {
-    public function __construct()
-    {
-    	$this->middleware('auth:admin');
-    }
+	public function __construct()
+	{
+		$this->middleware('auth');
+	}
 
     public function store(Request $request)
     {
@@ -22,13 +22,11 @@ class CommentsController extends Controller
 
     	$comment = new Comment;
 
-    	$comment->admin_id = Auth::user()->id;
+    	$comment->user_id = Auth::user()->id;
     	$comment->card_id = $request->input('card_id');
     	$comment->body = $request->input('body');
 
     	$comment->save();
-
-        session()->flash('message', 'Comment posted successfully!');
 
     	return redirect()->back();
     }

@@ -294,9 +294,55 @@ body {
   line-height: 0.5;
 }
 
-.progress {
-  width:120px;
-  height:20px;
-  margin-right:10px;
-  float:left;
+li a {
+  color: inherit;
+}
+
+.colors {
+  display: inline-block;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin: .25rem;
+}
+
+.red {
+  background-color: #ff4d4d !important;
+  color: white !important;
+  font-weight: bold !important;
+}
+
+.purple {
+  background-color: #d580ff !important;
+  color: white !important;
+  font-weight: bold !important;
+}
+
+.blue {
+  background-color: #1aa3ff !important;
+  color: white !important;
+  font-weight: bold !important;
+}
+
+.orange {
+  background-color: #ffa64d !important;
+  color: white !important;
+  font-weight: bold !important;
+}
+
+.yellow {
+  background-color: #ffff66 !important;
+  font-weight: bold !important;
+}
+
+.white {
+  background-color: white !important;
+}
+
+.modal-title {
+  color: black;
+}
+
+.alert {
+  z-index: 10;
+  position: absolute;
 }

@@ -1,9 +1,9 @@
-@extends('layouts.user.master')
+@extends('layouts.admin.master')
 
 @section('content')
 <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-        <h5><i class="fas fa-user-circle"></i> User Profile</h5>
+        <h5><i class="fas fa-user-circle"></i> Profile</h5>
     </div>
 	<div class="content">
         <div class="row">
@@ -12,25 +12,25 @@
                     
                     <div class="card-header">
                         <h3 class="title">
-   							Edit User Details
+   							Edit Details
    						</h3>
    					</div>
    					 <div class="card-body">
 						<h6>
-							<form method="POST" action="/users/profile/{{ $user->id }}">
+							<form method="POST" action="/admin/profile/{{ $admin->id }}">
 								@method('PATCH')
 								@csrf
 								<div class="form-group">
 									<label for="name">Name</label>
-									<input class="form-control" type="text" name="name" value="{{ $user->name }}" disabled>
+									<input class="form-control" type="text" name="name" value="{{ $admin->name }}" disabled>
 								</div>
 								<div class="form-group">
 									<lable for="department">Department</lable>
-									<input class="form-control" type="text" name="department" value="{{$user->department}}" disabled>
+									<input class="form-control" type="text" name="department" value="{{$admin->department}}">
 								</div>
 								<div class="form-group">
 									<label for="email">Email</label>
-									<input class="form-control" type="email" name="email" value="{{ $user->email }}" required>
+									<input class="form-control" type="email" name="email" value="{{ $admin->email }}" required>
 								</div>
 								<button type="submit" class="btn btn-primary btn-round">Change</button>
 							</form>
@@ -48,7 +48,7 @@
 					</div>
 					<div class="card-body">
 						<h6>
-							<form method="POST" action="/users/profile/{{ $user->id }}">
+							<form method="POST" action="/admin/profile/{{ $admin->id }}">
 								@method('PATCH')
 								@csrf
 								
@@ -66,7 +66,6 @@
 								</div>
 								<button type="submit" class="btn btn-primary btn-round" style="float:right">Change Password</button>
 								<br/>
-								<p><em>You will be logged out once password has been successfully changed.</p><p> Please log back in with new password</em></p>
 							</form>
 						</h6>
 					</div>

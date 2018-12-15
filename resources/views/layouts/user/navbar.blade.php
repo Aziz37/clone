@@ -20,8 +20,11 @@
     <!--end navbar-->
     <div class="panel-header panel-header-sm d-flex justify-content-center">
         @if ($flash = session('message'))
-            <div id="alert" class="alert alert-info fade show" role="alert">
+            <div id="alert" class="alert alert-info alert-dismissible fade show" role="alert">
                 <strong>{{ $flash }}</strong>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
         @endif
     </div>

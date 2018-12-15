@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Card;
 use App\User;
 use App\Board;
+use App\Listing;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -32,6 +33,8 @@ class BoardsController extends Controller
 
 		$board->save();
 
+		session()->flash('message', 'New Project created!');
+
 		return redirect()->back();
 	}
 
@@ -41,7 +44,18 @@ class BoardsController extends Controller
 		$boards = Board::all();
 		$users = User::all();
 
-		return view('admin.boards.show', compact('board', 'boards', 'users'));
+		$totalCards = Card::where('board_id', '=', $board->id)->count();
+
+		$doneListId = Listing::where('name', '=', 'Done')
+							 ->orWhere('name', '=', 'Review')
+							 ->pluck('id');
+		$completedCards = Card::where('listing_id', '=', $doneListId)->count();
+
+		if($totalCards>0)
+			$percentage = ceil(($completedCards)*100/$totalCards);
+		else $percentage = 0;
+
+		return view('admin.boards.show', compact('board', 'boards', 'users', 'percentage'));
 	}
 
 	public function update($id, Request $request)
@@ -55,6 +69,8 @@ class BoardsController extends Controller
                 'due_time' => $request->input('time')
             ]);
 
+            session()->flash('message', 'Project deadline has been set');
+
             return redirect()->back();
         }
 
@@ -64,6 +80,8 @@ class BoardsController extends Controller
                 'due_date' => NULL,
                 'due_time' => NULL
             ]);
+
+            session()->flash('message', 'Project deadline has been removed');
 
             return redirect()->back();
         }

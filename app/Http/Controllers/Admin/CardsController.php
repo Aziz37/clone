@@ -38,6 +38,8 @@ class CardsController extends Controller
         $admin = Admin::findOrFail(Auth::user()->id);
         $admin->cards()->attach($card->id);
 
+        session()->flash('message', 'Card created');
+
     	return redirect()->back();
     }
 
@@ -60,6 +62,8 @@ class CardsController extends Controller
                 'due_time' => $request->input('time')
             ]);
 
+            session()->flash('message', 'Task deadline has been set');
+
             return redirect()->back();
         }
 
@@ -70,6 +74,8 @@ class CardsController extends Controller
                 'due_time' => NULL
             ]);
 
+            session()->flash('message', 'Task deadline has been removed');
+
             return redirect()->back();
         }
 
@@ -79,12 +85,27 @@ class CardsController extends Controller
                 'description' => $request->input('description')
             ]);
 
+            session()->flash('message', 'Task description updated');
+
+            return redirect()->back();
+        }
+
+        if($request->has('color'))
+        {
+            Card::where('id', '=', $cardId)->update([
+                'color' => $request->input('color')
+            ]);
+
+            session()->flash('message', 'Color has been associated with this task');
+
             return redirect()->back();
         }
 
         Card::where('id', '=', $cardId)->update([
             'listing_id' => $request->input('list_id')
         ]);
+
+        session()->flash('message', 'Task has been moved');
 
         return redirect()->back();
     }
@@ -95,6 +116,8 @@ class CardsController extends Controller
         $boardId = $card->board_id;
 
         $card->delete();
+
+        session()->flash('message', 'Task deleted');
 
         return redirect()->action('Admin\BoardsController@show', compact('boardId'));
     }

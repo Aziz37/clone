@@ -29,6 +29,8 @@ class ListingsController extends Controller
 
 		$list->save();
 
+        session()->flash('message', 'List created');
+
 		return redirect()->action('Admin\BoardsController@show', compact('boardId'));
     }
 
@@ -38,6 +40,8 @@ class ListingsController extends Controller
 
         $list->cards()->delete();
         $list->delete();
+
+        session()->flash('message', 'List removed');
         
         return redirect()->back();
     }

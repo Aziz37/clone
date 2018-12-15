@@ -66,6 +66,6 @@ class HomeController extends Controller
 
         session()->flash('message', 'User Details Changed Successfully !');
 
-        return $this->edit($id);
+        return redirect()->back();
     }
 }

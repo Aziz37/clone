@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers\User;
 
 use App\File;
 use Illuminate\Http\Request;
@@ -12,7 +12,7 @@ class FilesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:admin');
+        $this->middleware('auth');
     }
 
     public function store(Request $request)
@@ -22,7 +22,7 @@ class FilesController extends Controller
     	foreach($files as $file)
 		{
 			File::create([
-				'admin_id'  =>  Auth::user()->id,
+				'user_id'  	=>  Auth::user()->id,
 				'board_id'  =>  $request->input('board_id'),
 				'listing_id'=>  $request->input('list_id'),
 				'card_id'   =>  $request->input('card_id'),
@@ -30,7 +30,6 @@ class FilesController extends Controller
 				'path'      =>  $file->store('public/storage')
 			]);
 
-            session()->flash('message', 'File uploaded! ');
 			return redirect()->back();
 		}
     }
@@ -45,11 +44,15 @@ class FilesController extends Controller
     {
     	$file = File::findOrFail($id);
         
-    	Storage::delete($file->path);
-    	$file->delete();
+    	if($file->user_id == Auth::user()->id)
+    	{
+	    	Storage::delete($file->path);
+	    	$file->delete();
 
-        session()->flash('message', 'File deleted');
+	    	return redirect()->back();
+	    }
 
-    	return redirect()->back();
+	    session()->flash('message', 'You are not authorized to delete this file');
+	    return redirect()->back();
     }
 }

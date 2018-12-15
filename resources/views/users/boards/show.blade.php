@@ -52,11 +52,25 @@
                         <ul class="list-items">
                             @foreach($list->cards as $card)
                                 @if($card->users()->where('user_id', '=', Auth::user()->id)->exists() && $card->users()->where('card_id', '=', $card->id)->exists())
-                            	<li>
-                            		{{$card->title}}
+                            	<li class="{{$card->color}}">
+                            		<a href="/users/cards/{{$card->id}}">{{$card->title}}</a>
                             		<a href="#" class="options" data-toggle="modal" data-target="#options_{{$card->id}}"> 
                                         <i class="fas fa-pencil-alt"></i>
                                     </a>
+                                    @if(isset($card->due_date) || isset($card->due_time))
+                                    <div class="badges">
+                                        @if($card->due_date > Carbon\Carbon::now()->toDateString() && $card->due_time > Carbon\Carbon::now()->addHours(12)->toTimeString())
+                                            <div class="badge green-badge">
+                                        @elseif($card->due_date == Carbon\Carbon::now()->toDateString() && $card->due_time > Carbon\Carbon::now()->addHours(6)->toTimeString())
+                                            <div class="badge yellow-badge">
+                                        @elseif($card->due_date <= Carbon\Carbon::now()->toDateString() && $card->due_time < Carbon\Carbon::now()->addHours(6)->toTimeString())
+                                            <div class="badge red-badge">
+                                        @endif
+                                            <i class="far fa-clock"></i> 
+                                            <span class="badge-text">{{$card->date_format($card->due_date)}}</span>
+                                        </div>
+                                    </div>
+                                    @endif
 <!-- Options Modal -->
 <div class="modal fade" id="options_{{$card->id}}" tabindex="-1" role="dialog" aria-labelledby="optionsLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">

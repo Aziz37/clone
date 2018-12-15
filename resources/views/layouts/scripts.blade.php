@@ -77,7 +77,7 @@
 	$(function() {
 		$('#hideDescriptionForm').click(function() {
 			$('#showDescriptionForm').toggle();
-			$('.description').toggle();
+			$('#description').toggle();
 		});
 	});
 </script>
@@ -92,4 +92,23 @@
 	$('#noDate').click(function() {
 		$('#setDate').toggle();
 	});
+</script>
+
+<script>
+	$(function() {
+		$('.setColor').click(function() {
+			var cardId = $(this).data('form-id');
+			$('#colors_'+cardId).toggle();
+		});
+	});
+</script>
+
+<script>
+    $('#customFile').on('change',function(){
+        //get the file name
+        var fileName = $(this).val();
+        var output = fileName.substr(12);
+        //replace the "Choose a file" label
+        $(this).next('.custom-file-label').html(output);
+    });
 </script>

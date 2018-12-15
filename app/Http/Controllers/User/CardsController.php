@@ -39,6 +39,13 @@ class CardsController extends Controller
     	return redirect()->back();
     }
 
+    public function show($id)
+    {
+        $card = Card::findOrFail($id);
+        
+        return view('users.cards.show', compact('card'));
+    }
+
     public function update($id, Request $request)
     {
         $cardId = $request->input('card_id');
