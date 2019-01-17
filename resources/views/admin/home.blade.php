@@ -4,8 +4,8 @@
     <!--main section-->
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-            <h5><i class="fas fa-user-circle"></i> Personal Boards</h5>
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createBoard"><i class="fas fa-plus"></i> Create a New Board</button>
+            <h5><i class="fas fa-user-circle"></i> All Projects</h5>
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createBoard"><i class="fas fa-plus"></i> Create a New Project</button>
         </div>
         
             @foreach($boards->chunk(3) as $chunks)
@@ -30,7 +30,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="createBoardLabel">Create a New Board</h5>
+                        <h5 class="modal-title" id="createBoardLabel">Create a New Project</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -48,7 +48,7 @@
                             </div>
                     </div>
                     <div class="modal-footer">
-                            <button type="submit" class="btn btn-success">Create Board</button>
+                            <button type="submit" class="btn btn-success">Create Project</button>
                         </form>
                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     </div>

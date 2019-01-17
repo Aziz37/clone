@@ -44,16 +44,30 @@ class BoardsController extends Controller
 		$boards = Board::all();
 		$users = User::all();
 
-		$totalCards = Card::where('board_id', '=', $board->id)->count();
+		$totalCards = 0;
 
-		$doneListId = Listing::where('name', '=', 'Done')
-							 ->orWhere('name', '=', 'Review')
-							 ->pluck('id');
-		$completedCards = Card::where('listing_id', '=', $doneListId)->count();
+		foreach($board->lists as $list)
+		{
+			foreach($list->cards as $card)
+			{
+				$totalCards++;
+			}
+		}
 
 		if($totalCards>0)
+		{
+			$doneListId = Listing::where('name', '=', 'Done')
+							 ->where('board_id', '=', $board->id)
+							 ->pluck('id');
+		
+			$completedCards = Card::where('listing_id', '=', $doneListId)->count();
+
 			$percentage = ceil(($completedCards)*100/$totalCards);
-		else $percentage = 0;
+		}
+		else 
+		{
+			$percentage = 0;
+		}
 
 		return view('admin.boards.show', compact('board', 'boards', 'users', 'percentage'));
 	}

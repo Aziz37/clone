@@ -4,6 +4,18 @@
             <!--sidebar-->
             <nav class="col-md-2 d-none d-md-block sidebar">
                 <div class="sidebar-sticky">
+                    <ul class="nav flex-colum mb-2">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin">
+                                <i class="fas fa-home"></i> Home
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/archive">
+                                <i class="fas fa-archive"></i> Archived Projects
+                            </a>
+                        </li>
+                    </ul>
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                         <span>USER MANAGEMENT</span>
                     </h6>
