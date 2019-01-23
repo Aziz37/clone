@@ -30,6 +30,8 @@ Route::prefix('admin')->group(function() {
 
 	Route::resource('/users', Admin\UsersController::class);
 
+	Route::get('/export', 'Admin\ExportExcelController@export');
+
 	Route::get('/profile/{id}/edit', 'Admin\AdminController@edit');
 	Route::patch('/profile/{id}', 'Admin\AdminController@update');
 
